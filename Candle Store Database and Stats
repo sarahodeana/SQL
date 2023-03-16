@@ -1,0 +1,35 @@
+--Create a Candle Store Database
+
+CREATE TABLE store (id INTEGER PRIMARY KEY, item_type TEXT, scent TEXT, price INTEGER, quantity INTEGER);
+
+INSERT INTO store VALUES (1, "Single Wick", "Lavender", 15.95, 11);
+INSERT INTO store VALUES (2, "Triple Wick", "Lavender", 23.95, 17);
+INSERT INTO store VALUES (3, "Single Wick", "Vanilla", 15.95, 14);
+INSERT INTO store VALUES (4, "Triple Wick", "Vanilla", 23.95, 9);
+INSERT INTO store VALUES (5, "Single Wick", "Teakwood", 15.95, 18);
+INSERT INTO store VALUES (6, "Triple Wick", "Teakwood", 23.95, 13);
+INSERT INTO store VALUES (7, "Single Wick", "White Tea", 15.95, 16);
+INSERT INTO store VALUES (8, "Triple Wick", "White Tea", 23.95, 13);
+INSERT INTO store VALUES (9, "Single Wick", "Candied Apple", 15.95, 18);
+INSERT INTO store VALUES (10, "Triple Wick", "Candied Apple", 23.95, 12);
+INSERT INTO store VALUES (11, "Single Wick", "Rose", 15.95, 15);
+INSERT INTO store VALUES (12, "Triple Wick", "Rose", 23.95, 20);
+INSERT INTO store VALUES (13, "Single Wick", "Lavender and Eucalyptus", 15.95, 24);
+INSERT INTO store VALUES (14, "Triple Wick", "Lavender and Eucalyptus", 23.95, 17);
+INSERT INTO store VALUES (15, "Single Wick", "Citrus", 15.95, 11);
+INSERT INTO store VALUES (16, "Triple Wick", "Citrus", 23.95, 14);
+
+--Display the list sorted alphabetically by scent
+SELECT * FROM store
+ORDER BY scent;
+
+--What is the total amount of Single Wick candles in inventory?
+SELECT SUM(quantity)
+FROM store
+WHERE item_type="Single Wick";
+
+--Which candle has the lowest quantity in inventory?
+SELECT item_type, scent, quantity
+FROM store
+ORDER BY quantity
+limit 1;
