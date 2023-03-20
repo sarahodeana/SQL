@@ -1,0 +1,91 @@
+--In this SQL, I'm creating multiple tables with various details about famous people and querying the database that has been created to answer questions about the data.
+
+CREATE TABLE famous_people (id INTEGER PRIMARY KEY, fullname TEXT);
+    INSERT INTO famous_people VALUES (1, "David Bowie");
+    INSERT INTO famous_people VALUES (2, "David Tennant");
+    INSERT INTO famous_people VALUES (3, "Jameela Jamil");
+    INSERT INTO famous_people VALUES (4, "Kristen Bell");
+    INSERT INTO famous_people VALUES (5, "D'Arcy Carden");
+    INSERT INTO famous_people VALUES (6, "Ted Danson");
+    INSERT INTO famous_people VALUES (7, "Jason Mantzoukas");
+    INSERT INTO famous_people VALUES (8, "Aubrey Plaza");
+    INSERT INTO famous_people VALUES (9, "Nick Offerman");
+    INSERT INTO famous_people VALUES (10, "Kristen Schaal");
+    INSERT INTO famous_people VALUES (11, "Frank Sinatra");
+
+CREATE TABLE status (id INTEGER PRIMARY KEY, current_status TEXT);
+    INSERT INTO status VALUES (1, "Deceased");
+    INSERT INTO status VALUES (2, "Alive");
+    INSERT INTO status VALUES (3, "Alive");
+    INSERT INTO status VALUES (4, "Alive");
+    INSERT INTO status VALUES (5, "Alive");
+    INSERT INTO status VALUES (6, "Alive");
+    INSERT INTO status VALUES (7, "Alive");
+    INSERT INTO status VALUES (8, "Alive");
+    INSERT INTO status VALUES (9, "Alive");
+    INSERT INTO status VALUES (10, "Alive");
+    INSERT INTO status VALUES (11, "Deceased");
+
+CREATE TABLE singers (id INTEGER PRIMARY KEY,
+    singer_id INTEGER,
+    popular_song TEXT);
+    INSERT INTO singers VALUES (1, 1, "Starman");
+    INSERT INTO singers VALUES (2, 4, "Love is an Open Door");
+    INSERT INTO singers VALUES (3, 11, "Fly Me to the Moon");
+    
+CREATE TABLE actors (id INTEGER PRIMARY KEY, 
+    actor_id INTEGER, 
+    title TEXT);
+    INSERT INTO actors VALUES (1, 1, "Labyrinth");
+    INSERT INTO actors VALUES (2, 2, "Doctor Who");
+    INSERT INTO actors VALUES (3, 3, "The Good Place");
+    INSERT INTO actors VALUES (4, 3, "She-Hulk");
+    INSERT INTO actors VALUES (5, 4, "Frozen");
+    INSERT INTO actors VALUES (6, 4, "The Good Place");
+    INSERT INTO actors VALUES (7, 4, "Veronica Mars");
+    INSERT INTO actors VALUES (8, 4, "Bad Moms");
+    INSERT INTO actors VALUES (9, 5, "The Good Place");
+    INSERT INTO actors VALUES (10, 5, "A League of Their Own");
+    INSERT INTO actors VALUES (11, 5, "Barry");
+    INSERT INTO actors VALUES (12, 6, "Cheers");
+    INSERT INTO actors VALUES (13, 6, "The Good Place");
+    INSERT INTO actors VALUES (14, 6, "Mr. Mayor");
+    INSERT INTO actors VALUES (15, 6, "Three Men and a Baby");
+    INSERT INTO actors VALUES (16, 7, "Big Mouth");
+    INSERT INTO actors VALUES (17, 7, "The Good Place");
+    INSERT INTO actors VALUES (18, 7, "The League");
+    INSERT INTO actors VALUES (19, 8, "Parks and Recreation");
+    INSERT INTO actors VALUES (20, 9, "The White Lotus");
+    INSERT INTO actors VALUES (21, 10, "The Last Man on Earth");
+    INSERT INTO actors VALUES (22, 10, "Bob's Burgers");
+    INSERT INTO actors VALUES (23, 10, "Gravity Falls");
+    
+--Who in the data base acted in "The Good Place"?
+SELECT famous_people.fullname
+FROM famous_people
+JOIN actors
+ON famous_people.id = actors.actor_id
+WHERE actors.title = "The Good Place";
+
+--How many people in the database are alive?
+SELECT COUNT(famous_people.fullname) AS "Currently Alive"
+FROM famous_people
+JOIN status
+ON famous_people.id = status.id
+WHERE status.current_status = "Alive";
+
+--Who is both a singer and an actor?
+SELECT famous_people.fullname
+FROM famous_people
+JOIN actors
+ON famous_people.id = actors.actor_id
+JOIN singers
+ON famous_people.id = singers.singer_id
+GROUP BY famous_people.fullname;
+
+--What media has Ted Danson been in?
+SELECT actors.title
+FROM actors
+JOIN famous_people
+ON actors.actor_id = famous_people.id
+WHERE famous_people.fullname = "Ted Danson";
