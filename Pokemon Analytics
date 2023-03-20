@@ -1,0 +1,39 @@
+--In this SQL, I'm querying a database of Pokemon statistics to answer questions about the data.
+
+--What is the Pokemon with the highest physical attack?
+SELECT name, MAX(attack)
+FROM pokemon;
+
+--What is the Pokemon with the lowest special defence?
+SELECT name, MIN(SP_Def)
+FROM pokemon;
+
+--What are the 5 slowest pokemon in Generation 5 and 6?
+SELECT name, speed
+FROM pokemon
+WHERE generation = 5 OR generation = 6
+GROUP BY speed
+LIMIT 5;
+
+--What are the average total stats for Pokemon in Generation 2?
+SELECT AVG(total) AS "Total Average Stats"
+FROM pokemon
+WHERE generation = 2;
+
+--Which generations of Pokemon have a total average HP greater than 70?
+SELECT generation
+FROM pokemon
+GROUP BY generation
+HAVING AVG(HP) > 70;
+
+--Which generation of pokemon were initially released on which gaming consoles?
+SELECT generation, 
+    CASE
+        WHEN generation < 4
+            THEN "Gameboy"
+        WHEN generation > 3 AND generation < 6
+            THEN "DS"
+        ELSE "3DS"
+    END AS gaming_console
+FROM pokemon
+GROUP BY generation;
