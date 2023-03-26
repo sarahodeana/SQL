@@ -1,0 +1,71 @@
+--For this project, I downloaded Spotify data from Kaggle and created a table in SQL for it.
+--I then imported the data from Kaggle into the table and worked to answer various questions about the data.
+
+CREATE TABLE BIT_DB.Spotifydata (
+id integer PRIMARY KEY,
+artist_name varchar NOT NULL,
+track_name varchar NOT NULL,
+track_id varchar NOT NULL,
+popularity integer NOT NULL,
+danceability decimal(4,3) NOT NULL,
+energy decimal(4,3) NOT NULL,
+song_key integer NOT NULL,
+loudness decimal(5,3) NOT NULL,
+song_mode integer NOT NULL,
+speechiness decimal(5,4) NOT NULL,
+acousticness decimal(6,5) NOT NULL,
+instrumentalness decimal(8,7) NOT NULL,
+liveness decimal(5,4) NOT NULL,
+valence decimal(4,3) NOT NULL,
+tempo decimal(6,3) NOT NULL,
+duration_ms integer NOT NULL,
+time_signature integer NOT NULL );
+
+--I then imported the Spotify data here. Following this, I worked on answering various questions in order to understand the data better.
+
+--What are the top 10 songs with the highest danceability and who are the artists behind them?
+SELECT track_name, artist_name FROM BIT_DB.Spotifydata
+ORDER BY danceability DESC
+LIMIT 10;
+
+--Which artist releasted the shortest song?
+SELECT artist_name, track_name FROM BIT_DB.Spotifydata
+ORDER BY duration_ms ASC
+LIMIT 1;
+
+--What is the average, minimum, and maximum tempo of the songs?
+SELECT AVG(tempo) AS average_tempo,
+    MIN(tempo) AS minimum_tempo,
+    MAX(tempo) AS maximum_tempo
+FROM BIT_DB.Spotifydata;
+
+--What are the 10 most popular songs and who made them?
+SELECT track_name, artist_name FROM BIT_DB.Spotifydata
+ORDER BY popularity DESC
+LIMIT 10;
+
+--How many songs are not in a 4/4 time signature?
+SELECT COUNT(track_name) AS Signature_Not_4 FROM BIT_DB.Spotifydata
+WHERE time_signature <> 4;
+
+--Which artist wrote the song with the highest energy?
+SELECT artist_name FROM BIT_DB.Spotifydata
+ORDER BY energy DESC
+LIMIT 1;
+
+--Calculate the average popularity for the artists in the Spotify data table. 
+--Then, for every artist with an average popularity of 90 or above, show their name, their average popularity, and label them as a “Top Star”.
+WITH avg_pop_table AS (
+SELECT 
+artist_name AS artist,
+AVG(popularity) AS avg_pop
+FROM Spotifydata
+GROUP BY artist
+)
+
+SELECT artist, 
+    avg_pop,
+    'Top Star' AS tag   
+FROM avg_pop_table
+WHERE avg_pop >= 90
+ORDER BY avg_pop DESC;
