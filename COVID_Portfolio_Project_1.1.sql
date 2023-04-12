@@ -120,7 +120,7 @@ SELECT *, (RollingPeopleVaccinated/Population)*100
 FROM #PercentPopulationVaccinated
 
 
---Creating View to stor data for visualizations
+--Creating View to store data for visualizations
 
 CREATE VIEW PercentPopulationVaccinated AS
 SELECT dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations
